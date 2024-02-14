@@ -21,10 +21,17 @@ def pregunta_01():
     214
 
     """
-    return
+    
+    with open("data.csv", "r") as data:
+        
+        numbers = [int(col[2]) for col in data]
 
+        return sum(numbers)
+    
 
 def pregunta_02():
+
+
     """
     Retorne la cantidad de registros por cada letra de la primera columna como la lista
     de tuplas (letra, cantidad), ordendas alfabéticamente.
@@ -39,7 +46,25 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    with open("data.csv", "r") as data:
+
+        letters = [col[0] for col in data]
+        
+        dic = {}
+
+        for i in letters:
+
+            if i not in dic: 
+                dic[i] = 1
+            
+            else:
+                dic[i] += 1
+        
+        dic = list(dic.items())
+    
+        return list(sorted(dic))
+
 
 
 def pregunta_03():
@@ -57,8 +82,26 @@ def pregunta_03():
     ]
 
     """
-    return
 
+    with open("data.csv", "r") as data:
+
+        letters_numbers = [(col[0], int(col[2])) for col in data]
+        
+        dic = {}
+
+        for i, j in letters_numbers:
+
+            if i not in dic: 
+                dic[i] = j
+            
+            else:
+                dic[i] += j
+        
+        dic = list(dic.items())
+    
+        return list(sorted(dic))
+
+    
 
 def pregunta_04():
     """
@@ -82,8 +125,26 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open("data.csv", "r") as data:
 
+        dates = [col.split("\t")[2] for col in data]
+        
+        months = [x.split("-")[1] for x in dates]
+        
+        dic = {}
+
+        for i in months:
+
+            if i not in dic: 
+                dic[i] = 1
+            
+            else:
+                dic[i] += 1
+        
+        dic = list(dic.items())
+    
+        return list(sorted(dic))
+    
 
 def pregunta_05():
     """
@@ -100,7 +161,28 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open("data.csv", "r") as data:
+
+        letters_numbers = [(col[0], int(col[2])) for col in data]
+        letters_numbers = list(sorted(letters_numbers))
+
+        sublist = {}
+
+        for letter, number in letters_numbers:
+            
+            if letter not in sublist:
+                sublist[letter] = [number]
+            
+            else:
+                sublist[letter].append(number)
+          
+        sublist = list(sublist.items())
+        maxmin = []
+
+        for elem in sublist:
+            maxmin.append((elem[0], elem[1][-1], elem[1][0]))
+
+        return maxmin
 
 
 def pregunta_06():
@@ -125,8 +207,38 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open("data.csv", "r") as data:
 
+        keys = [col.split()[4] for col in data]
+        keys = [x.split(",") for x in keys]
+
+        dic = {}
+
+        for i in keys:
+
+            for j in i:
+
+                key, value = j.split(":")
+
+                if key not in dic:
+                    dic[key] = [int(value)]
+                
+                else:
+                    dic[key].append(int(value))
+        
+        dic = list(dic.items())
+        dic = [list(x) for x in dic]
+        
+        for i in dic:
+            i[1] = sorted(i[1])
+        
+        maxmin = []
+
+        for elem in dic:
+            maxmin.append((elem[0], elem[1][0], elem[1][-1]))
+        
+        return list(sorted(maxmin))
+    
 
 def pregunta_07():
     """
@@ -149,8 +261,24 @@ def pregunta_07():
     ]
 
     """
-    return
+    with open("data.csv", "r") as data:
 
+        letters_numbers = [(col[0], int(col[2])) for col in data]
+
+        dic = {}
+
+        for letter, number in letters_numbers:
+            
+            if number not in dic:
+                dic[number] = [letter]
+            
+            else:
+                dic[number].append(letter)
+
+
+        dic = list(dic.items())
+        return list(sorted(dic))
+        
 
 def pregunta_08():
     """
@@ -174,7 +302,31 @@ def pregunta_08():
     ]
 
     """
-    return
+
+    with open("data.csv", "r") as data:
+
+        letters_numbers = [(col[0], int(col[2])) for col in data]
+
+        dic = {}
+
+        for letter, number in letters_numbers:
+            
+            if number not in dic:
+                dic[number] = [letter]
+            
+            else:
+                dic[number].append(letter)
+
+        dic = list(dic.items())
+        dic = [list(x) for x in dic]
+
+        for i in dic:
+            
+            i[1] = list(sorted(set(i[1])))
+        
+        dic = list(sorted([tuple(x) for x in dic]))
+        
+        return dic
 
 
 def pregunta_09():
@@ -197,8 +349,27 @@ def pregunta_09():
     }
 
     """
-    return
+    with open("data.csv", "r") as data:
 
+        keys = [col.split()[4] for col in data]
+        keys = [x.split(",") for x in keys]
+        keys = [x for sublist in keys for x in sublist]
+        keys = list(sorted(keys))
+
+        dic = {}
+
+        for i in keys:
+            
+            key, value = i.split(":")
+
+            if key not in dic:
+                dic[key] = 1
+                
+            else:
+                dic[key] += 1
+
+        return dic 
+    
 
 def pregunta_10():
     """
@@ -218,7 +389,13 @@ def pregunta_10():
 
 
     """
-    return
+    with open("data.csv", "r") as data:
+        
+        entries = [col.split() for col in data]
+        entries = [(x[0], len(x[3].split(",")), len(x[4].split(","))) for x in entries]
+        
+        return entries
+        
 
 
 def pregunta_11():
@@ -237,9 +414,26 @@ def pregunta_11():
         "g": 35,
     }
 
-
     """
-    return
+    with open("data.csv", "r") as data:
+
+        entries = [col.split() for col in data]
+        entries = [[x[3].split(","), int(x[1])] for x in entries]
+
+        dic = {}
+
+        for li in entries:
+
+            for i in li[0]:
+
+                if i not in dic:
+                    dic[i] = li[1]
+                
+                else:
+                    dic[i] += li[1]
+        
+        dic = dict(sorted(dic.items()))
+        return dic
 
 
 def pregunta_12():
@@ -257,4 +451,25 @@ def pregunta_12():
     }
 
     """
-    return
+    with open("data.csv", "r") as data:
+
+        entries = [col.split() for col in data]
+        entries = [
+            [x[0], 
+             sum([int(s) for s in x[4].replace(",", " ").replace(":", " ").split() if s.isdigit()])
+            ] 
+            for x in entries]
+
+        dic = {}
+
+        for key, value in entries:
+
+            if key not in dic:
+                dic[key] = value
+                
+            else:
+                dic[key] += value
+        
+        dic = dict(sorted(dic.items()))
+        return dic
+
